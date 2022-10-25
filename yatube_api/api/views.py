@@ -1,4 +1,3 @@
-from django.http.request import QueryDict
 from django.shortcuts import get_object_or_404
 from rest_framework.filters import SearchFilter
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
@@ -53,13 +52,8 @@ class FollowViewSet(CreateModelMixin,
 
         return self.request.user.followed.all()
 
-    def create(self, request, *args, **kwargs):
-        if isinstance(request.data, QueryDict):
-            request.data._mutable = True
-
-        request.data['user'] = request.user.username
-
-        return super().create(request, *args, **kwargs)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class CommentViewSet(ModelViewSet):

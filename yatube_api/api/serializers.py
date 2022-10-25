@@ -46,7 +46,8 @@ class FollowSerializer(serializers.ModelSerializer):
     """Serializer for Follow."""
     user = serializers.SlugRelatedField(
         slug_field='username',
-        queryset=User.objects.all()
+        queryset=User.objects.all(),
+        default=serializers.CurrentUserDefault()
     )
     following = serializers.SlugRelatedField(
         slug_field='username',
@@ -65,6 +66,6 @@ class FollowSerializer(serializers.ModelSerializer):
 
     def validate_following(self, value):
         if value == self.context['request'].user:
-            raise serializers.ValidationError('Atas')
+            raise serializers.ValidationError('You cant follow yourself.')
 
         return value

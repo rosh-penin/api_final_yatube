@@ -5,6 +5,7 @@ class IsAuthorOrReadOnly(BasePermission):
     """
     Custom permission.
     has_permission() method was copied from IsAuthenticatedOrReadOnly.
+    Isn't it better to just inherit from that class?
     """
 
     def has_permission(self, request, view):
