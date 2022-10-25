@@ -10,7 +10,7 @@ from rest_framework.viewsets import (
     GenericViewSet
 )
 
-from posts.models import Post, Group, Follow, Comment
+from posts.models import Post, Group, Comment
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (
     PostSerializer,
@@ -50,7 +50,8 @@ class FollowViewSet(CreateModelMixin,
     search_fields = ('following__username',)
 
     def get_queryset(self):
-        return Follow.objects.filter(user=self.request.user)
+
+        return self.request.user.followed.all()
 
     def create(self, request, *args, **kwargs):
         if isinstance(request.data, QueryDict):
