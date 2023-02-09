@@ -25,12 +25,11 @@ source venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
+Выполнить миграции:
+
 ```
 cd yatube_api
 ```
-
-Выполнить миграции:
-
 ```
 python3 manage.py migrate
 ```
